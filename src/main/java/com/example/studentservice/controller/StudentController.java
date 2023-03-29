@@ -1,7 +1,8 @@
 package com.example.studentservice.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.studentservice.dto.StudentRequest;
+import com.example.studentservice.dto.StudentResponse;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.studentservice.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -12,4 +13,15 @@ import lombok.RequiredArgsConstructor;
 public class StudentController {
 
   private final StudentService studentService;
+
+  @PostMapping
+  public StudentResponse save(@RequestBody StudentRequest studentRequest) {
+    return studentService.save(studentRequest);
+  }
+
+  @PutMapping
+  public void delete(StudentRequest studentRequest){
+     studentService.delete(studentRequest);
+  }
+
 }
