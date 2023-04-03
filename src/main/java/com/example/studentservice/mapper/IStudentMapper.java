@@ -10,4 +10,5 @@ public interface IStudentMapper {
 
     Student from(StudentRequest studentRequest);
     StudentResponse to(Student save);
+
 }

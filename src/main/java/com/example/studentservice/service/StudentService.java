@@ -10,6 +10,7 @@ import com.example.studentservice.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,18 +25,17 @@ public class StudentService {
   }
 
   public StudentResponse findById(Long id) {
-    Student student = studentRepository.findById(id).orElse(null);
-    return new StudentResponse(student);
+    Student student = studentRepository.findById(id).orElseThrow(null);
+    return studentMapper.to(student);
   }
 
-  public List<Student> findAll() {
-    return studentRepository.findAll();
+  public List<StudentResponse> findAll() {
+    return studentRepository.findAll().stream().map(studentMapper::to).collect(Collectors.toList());
   }
 
   public StudentResponse update(Long id, StudentRequest studentRequest) {
-    Student student = studentRepository.findById(id).orElse(null);
+    Student student = studentRepository.findById(id).orElseThrow(null);
 
-    assert student != null;
     student.setFirstName(studentRequest.getFirstName());
     student.setLastName(studentRequest.getLastName());
     student.setUsername(studentRequest.getUsername());
@@ -45,14 +45,11 @@ public class StudentService {
 
     Student updatedStudent = studentRepository.save(student);
 
-    return new StudentResponse(updatedStudent);
+    return studentMapper.to(updatedStudent);
   }
 
   public void deleteById(Long id) {
     studentRepository.deleteById(id);
   }
 
-  public void delete(StudentRequest studentRequest){
-    delete(studentRequest);
-  }
 }

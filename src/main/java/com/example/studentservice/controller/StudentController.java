@@ -29,7 +29,7 @@ public class StudentController {
 
   @GetMapping
   public List<StudentResponse> findAll() {
-    return studentService.findAll().stream().map(StudentResponse::new).collect(Collectors.toList());
+    return studentService.findAll();
   }
 
   @PutMapping("/{id}")
@@ -41,10 +41,5 @@ public class StudentController {
   public void deleteById(@PathVariable Long id) {
     studentService.deleteById(id);
   }
-  @DeleteMapping
-  public void delete(StudentRequest studentRequest){
-    studentService.delete(studentRequest);
-  }
+
 }
-
-
